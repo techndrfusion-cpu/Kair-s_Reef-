@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0A0A14;
+  --color-accent: #7B61FF;
+  --color-background: #F0EFF4;
+  --color-secondary: #51e8ff;
+  --color-surface: #12141A;
+  --color-card: #1A1C23;
+  --color-dark: #18181B;
+
+  --font-heading: "Sora", sans-serif;
+  --font-drama: "Instrument Serif", serif;
+  --font-mono: "Fira Code", monospace;
+  --font-body: "Mulish", sans-serif;
+}
+
+/* ─── BASE ─── */
+@layer base {
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.04;
+    filter: url(#noiseFilter);
+  }
+
+  ::selection {
+    background: #7B61FF;
+    color: #0A0A14;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #7B61FF33 transparent;
+  }
+}
+
+/* ─── UTILITIES ─── */
+@layer utilities {
+  .clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─── MAGNETIC BUTTON ─── */
+.btn-magnetic {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s ease;
+}
+
+.btn-magnetic:hover {
+  transform: scale(1.03);
+}
+
+.btn-magnetic:active {
+  transform: scale(0.97);
+}
+
+.btn-magnetic .btn-bg {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.btn-magnetic:hover .btn-bg {
+  transform: translateY(0);
+}
+
+.btn-magnetic span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── INTERACTIVE LINK LIFT ─── */
+.link-lift {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.link-lift:hover {
+  transform: translateY(-1px);
+}
+
+/* ─── KEYFRAMES ─── */
+
+/* Typewriter cursor blink */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink-cursor 1s step-end infinite;
+}
+
+/* Live dot pulse */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Card shuffler spring */
+@keyframes shuffle-up {
+  0% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-110%) scale(1.02); }
+  70% { transform: translateY(-100%) scale(0.99); }
+  100% { transform: translateY(-100%) scale(1); }
+}
+
+/* Scan line for protocol card */
+@keyframes scan-line {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.animate-scan {
+  animation: scan-line 3s linear infinite;
+}
+
+/* EKG wave */
+@keyframes ekg-dash {
+  to { stroke-dashoffset: -800; }
+}
+
+.animate-ekg {
+  animation: ekg-dash 3s linear infinite;
+}
+
+/* Hero logo slow pulse glow */
+@keyframes pulse-slow {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(81,232,255,0.4)) drop-shadow(0 0 60px rgba(127,97,255,0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 35px rgba(81,232,255,0.6)) drop-shadow(0 0 80px rgba(127,97,255,0.5));
+    transform: scale(1.03);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Rotating geometric shape */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Status dot */
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+
+.animate-status {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* Smooth fade in for gsap fallback */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Navbar glassmorphism transition */
+.navbar-glass {
+  transition: background-color 0.4s ease,
+              backdrop-filter 0.4s ease,
+              border-color 0.4s ease;
+}
+
+/* Admin shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.6s ease-in-out;
+}
+
+/* Admin fade in */
+@keyframes adminFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: adminFadeIn 0.3s ease-out forwards;
+}
